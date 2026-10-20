@@ -1,0 +1,37 @@
+[Unit]
+Description=iowebsite static frontend and Bilibili live status API
+Documentation=file:///opt/iowebsite/README.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=iowebsite
+Group=iowebsite
+WorkingDirectory=/opt/iowebsite
+EnvironmentFile=-/etc/iowebsite.env
+Environment=PORT=2993
+Environment=STATIC_DIR=/opt/iowebsite/dist
+ExecStart=/opt/iowebsite/server/target/release/iowebsite
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+KillSignal=SIGTERM
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallArchitectures=native
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
